@@ -1,2 +1,8 @@
 .python-version
 env.sh
+build
+dist
+env
+*.egg-info
+__pycache__/
+*.pyc
