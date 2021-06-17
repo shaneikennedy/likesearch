@@ -1,4 +1,4 @@
-name: Likesearch
+name: Build
 
 on: [push]
 

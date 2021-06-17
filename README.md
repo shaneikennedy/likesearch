@@ -1,5 +1,7 @@
 # Like Searcher - For Twitter
 
+[![Build status](https://github.com/shaneikennedy/likesearch/workflows/Build/badge.svg)](https://github.com/shaneikennedy/likesearch/actions)
+
 Can't be bothered to use the UI to search tweets from last year let alone 10 years ago...
 
 This little command-line tool will search as far back as your twitter likes go for a given query (beware of rate limiting!)
