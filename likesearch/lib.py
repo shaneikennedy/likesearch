@@ -62,7 +62,7 @@ def get_client() -> Twitter:
 
 def get_cli_args():
     cli_parser = argparse.ArgumentParser(
-        usage='python main.py "what you want to search"',
+        usage='likesearch "what you want to search"',
         description='pass a search string as an argument to this file to search your twitter likes',
     )
     cli_parser.add_argument('query', type=str, help='substring to query')
@@ -71,8 +71,8 @@ def get_cli_args():
     return args.query, args.first
 
 
-if __name__ == '__main__':
 
+def main():
     query, only_first = get_cli_args()
     twitter_client = get_client()
     search_hits = []
@@ -95,8 +95,8 @@ if __name__ == '__main__':
 
         try:
             likes = [
-                Like(l['id'], l['text'], l['user']['screen_name'])
-                for l in fetch_likes(twitter_client, 200, max_id=oldest_like.id)
+            Like(l['id'], l['text'], l['user']['screen_name'])
+            for l in fetch_likes(twitter_client, 200, max_id=oldest_like.id)
             ]
         except ConnectionResetError:
             # Is this for my shit internet ...
@@ -108,7 +108,6 @@ if __name__ == '__main__':
         search_hits += target_likes
         prev_oldest_like_id = oldest_like.id
         oldest_like = get_oldest_like(likes)
-
 
     # Report
     num_found = len(search_hits)
