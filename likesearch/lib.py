@@ -16,7 +16,7 @@ class Like:
         return f'https://twitter.com/{self.user_handle}/status/{self.id}'
 
     def __str__(self):
-        return f'"{self.text}" by {self.user_handle} at {self.url}"'
+        return f'"{self.text}" by {self.user_handle} at {self.url}'
 
     def __repr__(self):
         return str(self)
@@ -31,11 +31,14 @@ def search_likes(likes: Sequence[Like], q: str) -> Sequence[Like]:
     ]
 
 def get_oldest_like(likes: Sequence[Like]) -> Like:
-   return reduce(
-        lambda l, oldest: l if l.id < oldest.id else oldest,
-        likes,
-        likes[0],
-    )
+    if len(likes) == 0:
+        return None
+
+    return reduce(
+            lambda l, oldest: l if l.id < oldest.id else oldest,
+            likes,
+            likes[0],
+        )
 
 def get_client() -> Twitter:
     # Sometimes called consumer keys in twitter api land
@@ -82,6 +85,10 @@ def main():
         Like(l['id'], l['text'], l['user']['screen_name'])
         for l in fetch_likes(twitter_client, 200)
     ]
+    if len(likes) == 0:
+        print("You don't have any likes")
+        sys.exit()
+
     target_likes = search_likes(likes, query)
     search_hits += target_likes
     oldest_like = get_oldest_like(likes)
@@ -95,8 +102,8 @@ def main():
 
         try:
             likes = [
-            Like(l['id'], l['text'], l['user']['screen_name'])
-            for l in fetch_likes(twitter_client, 200, max_id=oldest_like.id)
+                Like(l['id'], l['text'], l['user']['screen_name'])
+                for l in fetch_likes(twitter_client, 200, max_id=oldest_like.id)
             ]
         except ConnectionResetError:
             # Is this for my shit internet ...
