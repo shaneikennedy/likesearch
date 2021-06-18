@@ -123,7 +123,8 @@ def main():
     num_found = len(search_hits)
     if num_found > 0:
         print(f"Found {num_found} likes matching {query}:")
-        print([t for t in search_hits])
+        for tweet in search_hits:
+            print(f"- {tweet}")
         sys.exit()
 
     print(f"No tweets matching {query} found.")
